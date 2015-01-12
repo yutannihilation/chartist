@@ -26,6 +26,7 @@ actually \code{select} is used inside).
 NSE Version of function to create chartist plot
 }
 \examples{
+set.seed(324)
 data <- data.frame(
   day = paste0("day", 1:10),
   A   = runif(10, 0, 10),
