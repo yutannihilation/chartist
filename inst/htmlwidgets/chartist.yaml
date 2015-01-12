@@ -1,0 +1,6 @@
+dependencies:
+- name: chartist
+  version: 0.5.0
+  src: htmlwidgets/lib/chartist
+  script: ./dist/chartist.min.js
+  style: ./dist/chartist.min.css
