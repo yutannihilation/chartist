@@ -10,6 +10,7 @@ Suggests:
   knitr
 Imports:
   htmlwidgets,
-  dplyr
+  dplyr,
+  plyr
 URL: http://github.com/yutannihilation/chartist
 License: WTFPL LICENSE
