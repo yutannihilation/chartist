@@ -3,6 +3,7 @@
 S3method("+",chartist)
 export(Bar)
 export(Line)
+export(Pie)
 export(Point)
 export(chartist)
 export(chartistOutput)
