@@ -64,12 +64,15 @@ chartist_ <- function(data, x_labels, select_cols) {
   
   series <- unname(as.list(series_cols))
 
-  x = list()
+  x <- list()
   
-  x$data = list(
+  x$data <- list(
     labels = x_labels,
     series = series
   )
+  
+  # line chart is defaultly drawn
+  x$type <- "Line"
 
   # create widget
   htmlwidgets::createWidget(
