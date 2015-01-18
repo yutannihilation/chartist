@@ -1,4 +1,4 @@
-context("Offset of axis labels")
+context("get_label_offset")
 
 test_that("single numeric", {
   expect_equal(get_label_offset(1), list(x = 1, y = 1))
