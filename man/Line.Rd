@@ -12,7 +12,83 @@ Line(x_offset = NULL, x_labelOffset = NULL, x_showLabel = NULL,
   areaBase = NULL, lineSmooth = NULL, low = NULL, high = NULL,
   chartPadding = NULL, fullWidth = NULL, classNames = NULL)
 }
+\arguments{
+\item{x_offset}{offset of the X-axis}
+
+\item{x_labelOffset}{offset of the each X-axis label (e.g. 1, c(1,2), list(x=1, y=2))}
+
+\item{x_showLabel}{if X-axis labels should be shown or not}
+
+\item{x_showGrid}{if X-axis grid should be drawn or not}
+
+\item{x_labelInterpolationFnc}{JS function to intercept the value from the X-axis label}
+
+\item{y_offset}{offset of the Y-axis labels to the chart area}
+
+\item{y_labelOffset}{offset of the X-axis labels (e.g. 1, c(1,2), list(x=1, y=2))}
+
+\item{y_showLabel}{if Y-axis labels should be shown or not}
+
+\item{y_showGrid}{if Y-axis grid should be drawn or not}
+
+\item{y_labelInterpolationFnc}{JS function to intercept the value from the Y-axis label}
+
+\item{y_scaleMinSpace}{minimum height in pixel of the scale steps}
+
+\item{width}{fixed width for the chart as a string (i.e. '100px' or '50\%')}
+
+\item{height}{fixed height for the chart as a string (i.e. '100px' or '50\%')}
+
+\item{showLine}{if the line should be drawn or not}
+
+\item{showPoint}{if dots should be drawn or not}
+
+\item{showArea}{if the line chart should draw an area}
+
+\item{areaBase}{base for the area chart that will be used to close the area shape
+(is normally 0)}
+
+\item{lineSmooth}{if the lines should be smoothed (Catmull-Rom-Splines will be used)}
+
+\item{low}{lower limit of value}
+
+\item{high}{higher limit of value}
+
+\item{chartPadding}{padding of the chart drawing area to the container element and labels}
+
+\item{fullWidth}{When set to true, the last grid line on the x-axis is not drawn and the
+chart elements will expand to the full available width of the chart. For
+the last label to be drawn correctly you might need to add chart padding
+or offset the last label with a draw event handler.}
+
+\item{classNames}{Override the class names that get used to generate the SVG structure of the chart}
+}
 \description{
 The Chartist line chart can be used to draw Line or Scatter charts.
+}
+\examples{
+\dontrun{
+set.seed(324)
+data <- data.frame(
+  day = paste0("day", 1:20),
+  A   = runif(20, 0, 10),
+  B   = runif(20, 0, 10),
+  C   = runif(20, 0, 10),
+  D   = runif(20, 0, 10)
+  )
+
+chartist(data, day) + Line(showArea = TRUE, showPoint = FALSE)
+
+# use JS function to generate axis labels
+interp <- htmlwidgets::JS("function(value, index) {return index \% 2 === 0 ? value : null;}")
+chartist(data, day) + Line(x_labelInterpolationFnc = interp)
+
+# these are the same
+chartist(data, day) + Point()
+chartist(data, day) + Line(showLine = FALSE)
+}
+}
+\seealso{
+\url{http://gionkunz.github.io/chartist-js/api-documentation.html#chartistline-function-line}
 }
 

@@ -7,6 +7,6 @@
 Point(...)
 }
 \description{
-A short cut for Line()
+A short cut for Line() with showLine = FALSE
 }
 

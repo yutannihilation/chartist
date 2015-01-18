@@ -21,6 +21,7 @@ update_chartist_options <- function(chartist_plot, chartist_options) {
   new_chartist_plot
 }
 
+#' The same function as plyr::defaults.
 defaults <- function(x, y) {
   c(x, y[setdiff(names(y), names(x))])
 }
