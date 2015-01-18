@@ -1,6 +1,6 @@
-#' Line chart
+#' Bar chart
 #' 
-#' The Chartist line chart can be used to draw Line or Scatter charts.
+#' The Chartist bar chart can be used to draw unipolar or bipolar bar and grouped bar charts.
 #' 
 #' @param x_offset       offset of the X-axis
 #' @param x_labelOffset  offset of the each X-axis label (e.g. 1, c(1,2), list(x=1, y=2))
@@ -15,19 +15,17 @@
 #' @param y_scaleMinSpace minimum height in pixel of the scale steps
 #' @param width          fixed width for the chart as a string (i.e. '100px' or '50\%')
 #' @param height         fixed height for the chart as a string (i.e. '100px' or '50\%')
-#' @param showLine       if the line should be drawn or not
-#' @param showPoint      if dots should be drawn or not
-#' @param showArea       if the line chart should draw an area
-#' @param areaBase       base for the area chart that will be used to close the area shape
-#'                       (is normally 0)
-#' @param lineSmooth     if the lines should be smoothed (Catmull-Rom-Splines will be used)
 #' @param low            lower limit of value
 #' @param high           higher limit of value
 #' @param chartPadding   padding of the chart drawing area to the container element and labels
+#' @param seriesBarDistance distance in pixel of bars in a group
 #' @param fullWidth      When set to true, the last grid line on the x-axis is not drawn and the 
 #'                       chart elements will expand to the full available width of the chart. For 
 #'                       the last label to be drawn correctly you might need to add chart padding
 #'                       or offset the last label with a draw event handler.
+#' @param centerBars     if bars are drawn on the grid line rather than between two grid lines
+#' @param stackBars      if series bars are stacked or not
+#'                       (in stacked mode the seriesBarDistance property will have no effect).
 #' @param classNames     Override the class names that get used to generate the SVG structure of the chart
 #' 
 #' @examples
@@ -41,32 +39,21 @@
 #'   D   = runif(20, 0, 10)
 #'   )
 #' 
-#' chartist(data, day) + Line(showArea = TRUE, showPoint = FALSE)
+#' chartist(data, day) + Bar()
 #' 
-#' # use JS function to generate axis labels
-#' interp <- create_labelInterporationFnc(interval = 4, prefix = " day")
-#' chartist(data, day) + Line(x_labelInterpolationFnc = interp)
-#' 
-#' # Of cource you can create your own JS function
-#' interp2 <- htmlwidgets::JS("function(value, index) {
-#'                              return index % 7 === 0 ? 'week ' + (index / 7) : null;}")
-#' chartist(data, day) + Line(x_labelInterpolationFnc = interp2)
-#' 
-#' # these are the same
-#' chartist(data, day) + Point()
-#' chartist(data, day) + Line(showLine = FALSE)
+#' chartist(data, day) + Bar(stackBars = TRUE)
 #' }
 #' 
-#' @seealso \url{http://gionkunz.github.io/chartist-js/api-documentation.html#chartistline-function-line}
+#' @seealso \url{http://gionkunz.github.io/chartist-js/api-documentation.html#chartistbar-function-bar}
 #' 
 #' @export
-Line <- function(x_offset = NULL, x_labelOffset = NULL, x_showLabel = NULL, x_showGrid = NULL,
-                 x_labelInterpolationFnc = NULL,
-                 y_offset = NULL, y_labelOffset = NULL, y_showLabel = NULL, y_showGrid = NULL,
-                 y_labelInterpolationFnc = NULL, y_scaleMinSpace = NULL,
-                 width = NULL, height = NULL, showLine = NULL, showPoint = NULL, showArea = NULL,
-                 areaBase = NULL, lineSmooth = NULL, low = NULL, high = NULL, chartPadding = NULL,
-                 fullWidth = NULL, classNames = NULL) {
+Bar <- function(x_offset = NULL, x_labelOffset = NULL, x_showLabel = NULL, x_showGrid = NULL,
+                x_labelInterpolationFnc = NULL,
+                y_offset = NULL, y_labelOffset = NULL, y_showLabel = NULL, y_showGrid = NULL,
+                y_labelInterpolationFnc = NULL, y_scaleMinSpace = NULL,
+                width = NULL, height = NULL, low = NULL, high = NULL,
+                chartPadding = NULL, seriesBarDistance = NULL, fullWidth = NULL,
+                centerBars = NULL, stackBars = NULL, classNames = NULL) {
   options <- list()
   
   # Options for X axis
@@ -96,25 +83,14 @@ Line <- function(x_offset = NULL, x_labelOffset = NULL, x_showLabel = NULL, x_sh
   
   options$width     <- width
   options$height    <- height
-  options$showLine  <- showLine
-  options$showPoint <- showPoint
-  options$showArea  <- showArea
-  options$areaBase  <- areaBase
-  options$lineSmooth <- lineSmooth
   options$low       <- low
   options$high      <- high
   options$chartPadding <- chartPadding
+  options$seriesBarDistance <- seriesBarDistance
   options$fullWidth <- fullWidth
+  options$centerBars <- centerBars
+  options$stackBars <- stackBars
   options$classNames <- classNames
   
-  structure(list(options = options, type = "Line"), class = "chartist_options")
-}
-
-#' Scatter Plot
-#' 
-#' A short cut for Line() with showLine = FALSE
-#' 
-#' @export
-Point <- function(...) {
-  Line(showLine = FALSE, ...)
+  structure(list(options = options, type = "Bar"), class = "chartist_options")
 }

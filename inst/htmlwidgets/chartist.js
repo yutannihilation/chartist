@@ -14,9 +14,18 @@ HTMLWidgets.widget({
 
   renderValue: function(el, x, instance) {
     
-    console.log(x);
-    
-    new Chartist.Line('#' + el.id, x.data, x.options);
+    switch(x.type) {
+      case "Line":
+        new Chartist.Line('#' + el.id, x.data, x.options);
+        break;
+      case "Bar":
+        new Chartist.Bar('#' + el.id, x.data, x.options);
+        break;
+      default:
+        console.log("No type muched");
+        // debug
+        console.log(x);
+    }
 
   },
 
