@@ -69,30 +69,11 @@ Line <- function(x_offset = NULL, x_labelOffset = NULL, x_showLabel = NULL, x_sh
                  fullWidth = NULL, classNames = NULL) {
   options <- list()
   
-  # Options for X axis
-  axisX <- list()
-  axisX$offset       <- x_offset
-  axisX$labelOffset  <- get_label_offset(x_labelOffset)
-  axisX$showLabel    <- x_showLabel
-  axisX$showGrid     <- x_showGrid
-  axisX$labelInterpolationFnc <- x_labelInterpolationFnc
+  options$axisX <- axis_options(x_offset, x_labelOffset, x_showLabel, x_showGrid,
+                                x_labelInterpolationFnc)
   
-  if(length(axisX) > 0){
-    options$axisX <- axisX
-  }
-  
-  # Options for Y axis
-  axisY <- list()
-  axisY$offset       <- y_offset
-  axisY$labelOffset  <- get_label_offset(y_labelOffset)
-  axisY$showLabel    <- y_showLabel
-  axisY$showGrid     <- y_showGrid
-  axisY$labelInterpolationFnc <- y_labelInterpolationFnc
-  axisY$scaleMinSpace <- y_scaleMinSpace
-  
-  if(length(axisY) > 0){
-    options$axisY <- axisY
-  }
+  options$axisY <- axis_options(y_offset, y_labelOffset, y_showLabel, y_showGrid,
+                                y_labelInterpolationFnc, y_scaleMinSpace)
   
   options$width     <- width
   options$height    <- height

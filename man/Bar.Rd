@@ -72,6 +72,10 @@ data <- data.frame(
   C   = runif(20, 0, 10),
   D   = runif(20, 0, 10)
   )
+
+chartist(data[1:6, ], day) + Bar()
+
+chartist(data, day) + Bar(stackBars = TRUE)
 }
 }
 \seealso{
