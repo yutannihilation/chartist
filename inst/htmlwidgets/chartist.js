@@ -16,7 +16,7 @@ HTMLWidgets.widget({
     
     console.log(x);
     
-    new Chartist.Line('#' + el.id, x);
+    new Chartist.Line('#' + el.id, x.data, x.options);
 
   },
 

@@ -7,9 +7,11 @@ Author: Hiroaki Yutani
 Maintainer: Hiroaki Yutani <yutani.ini@gmail.com>
 Description: Draw charts using Chartist.js, powered by htmlwidgets.
 Suggests:
-  knitr
+  knitr,
+  testthat
 Imports:
   htmlwidgets,
-  dplyr
+  dplyr,
+  plyr
 URL: http://github.com/yutannihilation/chartist
 License: WTFPL LICENSE

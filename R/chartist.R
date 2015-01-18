@@ -40,6 +40,7 @@
 #' chartist_(data, rep(c("Odd", "Even"), 5), "A")
 #' 
 #' @seealso \url{http://gionkunz.github.io/}
+#' @importFrom dplyr select_
 #' @export
 chartist_ <- function(data, x_labels, select_cols) {
   
@@ -63,7 +64,9 @@ chartist_ <- function(data, x_labels, select_cols) {
   
   series <- unname(as.list(series_cols))
 
-  x = list(
+  x = list()
+  
+  x$data = list(
     labels = x_labels,
     series = series
   )
@@ -79,6 +82,7 @@ chartist_ <- function(data, x_labels, select_cols) {
 #' NSE Version of function to create chartist plot
 #' 
 #' @rdname chartist
+#' @importFrom dplyr select_vars
 #' @export
 chartist <- function(data, x_label_colname, ...) {
   x_label_colname <- as.character(substitute(x_label_colname))
