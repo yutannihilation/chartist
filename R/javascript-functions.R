@@ -1,11 +1,8 @@
-#' Helper Functions to Generate Javascript Functions
-#' 
-#' @name javascript
-NULL
+# Helper Functions to Generate Javascript Functions
 
-#' A Helper Function For labelInterporationFnc
+#' A Helper Function To Create JS Functions For labelInterporationFnc
 #' 
-#' @rdname javascript
+#' @name JS_interp
 #' 
 #' @param interval interval between labels
 #' @param offset   offset to the first label
@@ -23,13 +20,13 @@ NULL
 #'   D   = runif(20, 0, 10)
 #'   )
 #' 
-#' chartist(data, day) + Line(x_labelInterpolationFnc = create_labelInterporationFnc(4, offset = 2))
+#' chartist(data, day) + Line(x_labelInterpolationFnc = JS_interp(4, offset = 2))
 #' 
-#' chartist(data, day) + Line(x_labelInterpolationFnc = create_labelInterporationFnc(4, prefix = "day "))
+#' chartist(data, day) + Line(x_labelInterpolationFnc = JS_interp(4, prefix = "day "))
 #' }
 #' 
 #' @export
-create_labelInterporationFnc <- function(interval = 1, offset = 0, prefix = NULL, suffix = NULL) {
+JS_interp <- function(interval = 1, offset = 0, prefix = NULL, suffix = NULL) {
   if(is.numeric(interval) && length(interval) != 1) stop("interval must be single numeric value")
   if(is.numeric(offset) && length(offset) != 1)     stop("offset must be single numeric value")
   
