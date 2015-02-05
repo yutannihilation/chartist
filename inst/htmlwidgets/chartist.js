@@ -86,16 +86,17 @@ HTMLWidgets.widget({
     var is_relative = params.relative;
     var is_opacity  = (style == 'opacity');
     
-    var accessor = 'value';
-      
-    if(style == 'opacity'){
-      is_relative = false;
-    } else if(style == 'x' || style == 'x1' || style == 'x2') {
-      accessor = 'x';
-    } else if(style == 'y' || style == 'y1' || style == 'y2') {
-      accessor = 'y';
+    var accessor_map = {
+      label: {x: 'x', y: 'y', width: 'width', height: 'height'},
+      grid:  {x1: 'x1', x2: 'x2', y1: 'y1', y2: 'y2'},
+      point: {x1: 'x',  x2: 'x',  y1: 'y',  y2: 'y'},
+      line:  {},
+      bar:   {x1: 'x',  x2: 'x',  y1: 'y1',  y2: 'y2'},
+      slice: {}
     }
-      
+    
+    var accessor = accessor_map[target][style];
+          
     return function (data) {
       var params_constructed = {};
       
@@ -104,8 +105,9 @@ HTMLWidgets.widget({
         params_constructed[style] = {
                   dur:  params.dur,
                   begin: chart.__seq * params.delay,
-                  from: (is_relative ? data[accessor] : null) + params.offset,
-                  to:   (is_opacity ? 1 : data[accessor]),                     //opacity should be 1 in the end
+                  from: (accessor ? data[accessor] : null) + params.offset,
+                  // opacity will be 1 at the end of animation
+                  to:   (accessor ? data[accessor] : 1),
                   easing: params.easing
               };
         data.element.animate(params_constructed);
