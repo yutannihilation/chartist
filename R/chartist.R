@@ -78,7 +78,11 @@ chartist_ <- function(data, x_labels, select_cols) {
   htmlwidgets::createWidget(
     name = 'chartist',
     x,
-    package = 'chartist'
+    package = 'chartist',
+    width = "100%",
+    height = "400px",
+    sizingPolicy = htmlwidgets::sizingPolicy(
+      browser.fill = TRUE)
   )
 }
 

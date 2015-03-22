@@ -7,7 +7,7 @@
 Pie(width = NULL, height = NULL, chartPadding = NULL, classNames = NULL,
   startAngle = NULL, total = NULL, donut = NULL, donutWidth = NULL,
   showLabel = NULL, labelOffset = NULL, labelInterpolationFnc = NULL,
-  labelDirection = NULL)
+  labelDirection = NULL, responsiveQuery = NULL)
 }
 \arguments{
 \item{width}{fixed width for the chart as a string (i.e. '100px' or '50\%')}
@@ -36,6 +36,8 @@ a single numeric value)}
 \item{labelInterpolationFnc}{JS function to intercept the value from labels}
 
 \item{labelDirection}{label direction. Possible values are 'neutral', 'explode' or 'implode'.}
+
+\item{responsiveQuery}{if specified, the options are used only when the query matches.}
 }
 \description{
 The Chartist pie chart can be used to draw pie, donut or gauge charts.
@@ -52,12 +54,16 @@ data <- data.frame(
   )
 
 # Only first data series is used for Pie(). So, these two draw the same chart.
-interp <- create_labelInterporationFnc(prefix = "Item ")
-chartist(data[1:4, ], day) + Pie(labelInterpolationFnc = interp)
-chartist(data[1:4, 1], day) + Pie(labelInterpolationFnc = interp)
+interp <- JS_interp(prefix = "Item ")
+chartist(data, day) + Pie(labelInterpolationFnc = interp)
+chartist(subset(data, , 1), day) + Pie(labelInterpolationFnc = interp)
 
-# donut chart
-chartist(data[1:4, 1], day) + Pie(donut = TRUE, donutWidth = 100)
+# responsive chart
+chartist(data[1:4, ], day) +
+  # by default, draw a donut chart
+  Pie(donut = TRUE, donutWidth = 100) +
+  # for smaller screens, draw a normal pie chart
+  Pie(donut = FALSE, showLabel = FALSE, responsiveQuery = "screen and (max-width: 600px)")
 
 # By default, Chartist knows only four colours (c.f. https://github.com/gionkunz/chartist-js/issues/79)
 # Corrently Pie() cannot work well with data whose length is more than four

@@ -10,7 +10,7 @@ Bar(x_offset = NULL, x_labelOffset = NULL, x_showLabel = NULL,
   y_labelInterpolationFnc = NULL, y_scaleMinSpace = NULL, width = NULL,
   height = NULL, low = NULL, high = NULL, chartPadding = NULL,
   seriesBarDistance = NULL, fullWidth = NULL, centerBars = NULL,
-  stackBars = NULL, classNames = NULL)
+  stackBars = NULL, classNames = NULL, responsiveQuery = NULL)
 }
 \arguments{
 \item{x_offset}{offset of the X-axis}
@@ -58,6 +58,8 @@ or offset the last label with a draw event handler.}
 (in stacked mode the seriesBarDistance property will have no effect).}
 
 \item{classNames}{Override the class names that get used to generate the SVG structure of the chart}
+
+\item{responsiveQuery}{if specified, the options are used only when the query matches.}
 }
 \description{
 The Chartist bar chart can be used to draw unipolar or bipolar bar and grouped bar charts.
@@ -66,16 +68,23 @@ The Chartist bar chart can be used to draw unipolar or bipolar bar and grouped b
 \dontrun{
 set.seed(324)
 data <- data.frame(
-  day = 1:20,
-  A   = runif(20, 0, 10),
-  B   = runif(20, 0, 10),
-  C   = runif(20, 0, 10),
-  D   = runif(20, 0, 10)
-  )
+  day = 1:10,
+  A   = runif(10, 0, 10),
+  B   = runif(10, 0, 10),
+  C   = runif(10, 0, 10),
+  D   = runif(10, 0, 10)
+)
 
 chartist(data[1:6, ], day) + Bar()
 
 chartist(data, day) + Bar(stackBars = TRUE)
+
+# responsive chart
+chartist(data, day) +
+  # By default, draw a normal bar chart
+  Bar(stackBars = FALSE) +
+  # For smaller screens, draw a stacked bar chart
+  Bar(stackBars = TRUE, responsiveQuery = "screen and (max-width: 600px)")
 }
 }
 \seealso{

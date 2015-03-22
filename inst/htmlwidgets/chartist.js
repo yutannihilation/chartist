@@ -10,6 +10,9 @@ HTMLWidgets.widget({
       window.__charts = [];
     }
     
+    el.offsetWidth = width;
+    el.offsetHeight = height;
+    
     return {
     };
 
@@ -36,16 +39,16 @@ HTMLWidgets.widget({
         
     switch(x.type) {
       case 'Line':
-        chart = new Chartist.Line('#' + el.id, x.data, x.options);
+        chart = new Chartist.Line('#' + el.id, x.data, x.options, x.responsiveOptions);
         break;
       case 'Bar':
-        chart = new Chartist.Bar('#' + el.id, x.data, x.options);
+        chart = new Chartist.Bar('#' + el.id, x.data, x.options, x.responsiveOptions);
         break;
       case 'Pie':
         //only use first data series
         var data = Chartist.extend({}, x.data);
         data.series = data.series[0];
-        chart = new Chartist.Pie('#' + el.id, data, x.options);
+        chart = new Chartist.Pie('#' + el.id, data, x.options, x.responsiveOptions);
         break;
       default:
         console.log('No type matched');
