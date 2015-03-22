@@ -17,6 +17,7 @@
 #'                       a single numeric value)
 #' @param labelInterpolationFnc JS function to intercept the value from labels
 #' @param labelDirection label direction. Possible values are 'neutral', 'explode' or 'implode'.
+#' @param responsiveQuery if specified, the options are used only when the query matches.
 #' 
 #' @examples
 #' \dontrun{
@@ -30,12 +31,16 @@
 #'   )
 #' 
 #' # Only first data series is used for Pie(). So, these two draw the same chart.
-#' interp <- create_labelInterporationFnc(prefix = "Item ")
-#' chartist(data[1:4, ], day) + Pie(labelInterpolationFnc = interp)
-#' chartist(data[1:4, 1], day) + Pie(labelInterpolationFnc = interp)
+#' interp <- JS_interp(prefix = "Item ")
+#' chartist(data, day) + Pie(labelInterpolationFnc = interp)
+#' chartist(subset(data, , 1), day) + Pie(labelInterpolationFnc = interp)
 #' 
-#' # donut chart
-#' chartist(data[1:4, 1], day) + Pie(donut = TRUE, donutWidth = 100)
+#' # responsive chart
+#' chartist(data[1:4, ], day) +
+#'   # by default, draw a donut chart
+#'   Pie(donut = TRUE, donutWidth = 100) +
+#'   # for smaller screens, draw a normal pie chart
+#'   Pie(donut = FALSE, showLabel = FALSE, responsiveQuery = "screen and (max-width: 600px)")
 #' 
 #' # By default, Chartist knows only four colours (c.f. https://github.com/gionkunz/chartist-js/issues/79)
 #' # Corrently Pie() cannot work well with data whose length is more than four
@@ -47,7 +52,8 @@
 #' @export
 Pie <- function(width = NULL, height = NULL, chartPadding = NULL, classNames = NULL,
                 startAngle = NULL, total = NULL, donut = NULL, donutWidth = NULL,
-                showLabel = NULL, labelOffset = NULL, labelInterpolationFnc = NULL, labelDirection = NULL) {
+                showLabel = NULL, labelOffset = NULL, labelInterpolationFnc = NULL, labelDirection = NULL,
+                responsiveQuery = NULL) {
   options <- list()
     
   options$width      <- width
@@ -63,5 +69,15 @@ Pie <- function(width = NULL, height = NULL, chartPadding = NULL, classNames = N
   options$labelInterpolationFnc <- labelInterpolationFnc
   options$labelDirection <- labelDirection
   
-  structure(list(options = options, type = "Pie"), class = "chartist_options")
+  if(is.null(responsiveQuery)) {
+    structure(list(options = options,
+                   responsiveOptions = NULL,
+                   type = "Pie"),
+              class = "chartist_options")
+  } else {
+    structure(list(options = NULL,
+                   responsiveOptions = list(list(responsiveQuery, options)),
+                   type = "Pie"),
+              class = "chartist_options")
+  }
 }

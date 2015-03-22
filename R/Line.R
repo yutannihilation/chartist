@@ -29,6 +29,7 @@
 #'                       the last label to be drawn correctly you might need to add chart padding
 #'                       or offset the last label with a draw event handler.
 #' @param classNames     Override the class names that get used to generate the SVG structure of the chart
+#' @param responsiveQuery if specified, the options are used only when the query matches.
 #' 
 #' @examples
 #' \dontrun{
@@ -44,7 +45,7 @@
 #' chartist(data, day) + Line(showArea = TRUE, showPoint = FALSE)
 #' 
 #' # use JS function to generate axis labels
-#' interp <- create_labelInterporationFnc(interval = 4, prefix = " day")
+#' interp <- JS_interp(interval = 4, prefix = " day")
 #' chartist(data, day) + Line(x_labelInterpolationFnc = interp)
 #' 
 #' # Of cource you can create your own JS function
@@ -55,6 +56,23 @@
 #' # these are the same
 #' chartist(data, day) + Point()
 #' chartist(data, day) + Line(showLine = FALSE)
+#' 
+#' # responsive chart
+#' set.seed(324)
+#' data <- data.frame(
+#'   day = 1:10,
+#'   A   = runif(10, 0, 10),
+#'   B   = runif(10, 0, 10),
+#'   C   = runif(10, 0, 10)
+#' )
+#' 
+#' chartist(data, day) +
+#'   # By default, the axis labels are day-bases
+#'   Line(x_labelInterpolationFnc = JS_interp(interval = 1, prefix = "day")) +
+#'   # For small screens, they are week-bases
+#'   Line(x_labelInterpolationFnc = JS_interp(interval = 7, prefix = "week"),
+#'        showPoint = FALSE,
+#'        responsiveQuery = "screen and (max-width: 600px)")
 #' }
 #' 
 #' @seealso \url{http://gionkunz.github.io/chartist-js/api-documentation.html#chartistline-function-line}
@@ -66,7 +84,7 @@ Line <- function(x_offset = NULL, x_labelOffset = NULL, x_showLabel = NULL, x_sh
                  y_labelInterpolationFnc = NULL, y_scaleMinSpace = NULL,
                  width = NULL, height = NULL, showLine = NULL, showPoint = NULL, showArea = NULL,
                  areaBase = NULL, lineSmooth = NULL, low = NULL, high = NULL, chartPadding = NULL,
-                 fullWidth = NULL, classNames = NULL) {
+                 fullWidth = NULL, classNames = NULL, responsiveQuery = NULL) {
   options <- list()
   
   options$axisX <- axis_options(x_offset, x_labelOffset, x_showLabel, x_showGrid,
@@ -88,7 +106,17 @@ Line <- function(x_offset = NULL, x_labelOffset = NULL, x_showLabel = NULL, x_sh
   options$fullWidth <- fullWidth
   options$classNames <- classNames
   
-  structure(list(options = options, type = "Line"), class = "chartist_options")
+  if(is.null(responsiveQuery)) {
+    structure(list(options = options,
+                   responsiveOptions = NULL,
+                   type = "Line"),
+              class = "chartist_options")
+  } else {
+    structure(list(options = NULL,
+                   responsiveOptions = list(list(responsiveQuery, options)),
+                   type = "Line"),
+              class = "chartist_options")
+  }
 }
 
 #' Scatter Plot

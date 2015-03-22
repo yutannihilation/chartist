@@ -10,7 +10,8 @@ Line(x_offset = NULL, x_labelOffset = NULL, x_showLabel = NULL,
   y_labelInterpolationFnc = NULL, y_scaleMinSpace = NULL, width = NULL,
   height = NULL, showLine = NULL, showPoint = NULL, showArea = NULL,
   areaBase = NULL, lineSmooth = NULL, low = NULL, high = NULL,
-  chartPadding = NULL, fullWidth = NULL, classNames = NULL)
+  chartPadding = NULL, fullWidth = NULL, classNames = NULL,
+  responsiveQuery = NULL)
 }
 \arguments{
 \item{x_offset}{offset of the X-axis}
@@ -62,6 +63,8 @@ the last label to be drawn correctly you might need to add chart padding
 or offset the last label with a draw event handler.}
 
 \item{classNames}{Override the class names that get used to generate the SVG structure of the chart}
+
+\item{responsiveQuery}{if specified, the options are used only when the query matches.}
 }
 \description{
 The Chartist line chart can be used to draw Line or Scatter charts.
@@ -80,7 +83,7 @@ data <- data.frame(
 chartist(data, day) + Line(showArea = TRUE, showPoint = FALSE)
 
 # use JS function to generate axis labels
-interp <- create_labelInterporationFnc(interval = 4, prefix = " day")
+interp <- JS_interp(interval = 4, prefix = " day")
 chartist(data, day) + Line(x_labelInterpolationFnc = interp)
 
 # Of cource you can create your own JS function
@@ -91,6 +94,23 @@ chartist(data, day) + Line(x_labelInterpolationFnc = interp2)
 # these are the same
 chartist(data, day) + Point()
 chartist(data, day) + Line(showLine = FALSE)
+
+# responsive chart
+set.seed(324)
+data <- data.frame(
+  day = 1:10,
+  A   = runif(10, 0, 10),
+  B   = runif(10, 0, 10),
+  C   = runif(10, 0, 10)
+)
+
+chartist(data, day) +
+  # By default, the axis labels are day-bases
+  Line(x_labelInterpolationFnc = JS_interp(interval = 1, prefix = "day")) +
+  # For small screens, they are week-bases
+  Line(x_labelInterpolationFnc = JS_interp(interval = 7, prefix = "week"),
+       showPoint = FALSE,
+       responsiveQuery = "screen and (max-width: 600px)")
 }
 }
 \seealso{

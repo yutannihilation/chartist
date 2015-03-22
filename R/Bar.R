@@ -27,21 +27,29 @@
 #' @param stackBars      if series bars are stacked or not
 #'                       (in stacked mode the seriesBarDistance property will have no effect).
 #' @param classNames     Override the class names that get used to generate the SVG structure of the chart
+#' @param responsiveQuery if specified, the options are used only when the query matches.
 #' 
 #' @examples
 #' \dontrun{
 #' set.seed(324)
 #' data <- data.frame(
-#'   day = 1:20,
-#'   A   = runif(20, 0, 10),
-#'   B   = runif(20, 0, 10),
-#'   C   = runif(20, 0, 10),
-#'   D   = runif(20, 0, 10)
-#'   )
+#'   day = 1:10,
+#'   A   = runif(10, 0, 10),
+#'   B   = runif(10, 0, 10),
+#'   C   = runif(10, 0, 10),
+#'   D   = runif(10, 0, 10)
+#' )
 #' 
 #' chartist(data[1:6, ], day) + Bar()
 #' 
 #' chartist(data, day) + Bar(stackBars = TRUE)
+#' 
+#' # responsive chart
+#' chartist(data, day) +
+#'   # By default, draw a normal bar chart
+#'   Bar(stackBars = FALSE) +
+#'   # For smaller screens, draw a stacked bar chart
+#'   Bar(stackBars = TRUE, responsiveQuery = "screen and (max-width: 600px)")
 #' }
 #' 
 #' @seealso \url{http://gionkunz.github.io/chartist-js/api-documentation.html#chartistbar-function-bar}
@@ -53,7 +61,7 @@ Bar <- function(x_offset = NULL, x_labelOffset = NULL, x_showLabel = NULL, x_sho
                 y_labelInterpolationFnc = NULL, y_scaleMinSpace = NULL,
                 width = NULL, height = NULL, low = NULL, high = NULL,
                 chartPadding = NULL, seriesBarDistance = NULL, fullWidth = NULL,
-                centerBars = NULL, stackBars = NULL, classNames = NULL) {
+                centerBars = NULL, stackBars = NULL, classNames = NULL, responsiveQuery = NULL) {
   options <- list()
   
   options$axisX <- axis_options(x_offset, x_labelOffset, x_showLabel, x_showGrid,
@@ -73,5 +81,15 @@ Bar <- function(x_offset = NULL, x_labelOffset = NULL, x_showLabel = NULL, x_sho
   options$stackBars <- stackBars
   options$classNames <- classNames
   
-  structure(list(options = options, type = "Bar"), class = "chartist_options")
+  if(is.null(responsiveQuery)) {
+    structure(list(options = options,
+                   responsiveOptions = NULL,
+                   type = "Bar"),
+              class = "chartist_options")
+  } else {
+    structure(list(options = NULL,
+                   responsiveOptions = list(list(responsiveQuery, options)),
+                   type = "Bar"),
+              class = "chartist_options")
+  }
 }
