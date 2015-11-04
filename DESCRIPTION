@@ -2,16 +2,18 @@ Package: chartist
 Type: Package
 Title: Chartist.js for R
 Version: 0.0.1
-Date: 2015-01-12
+Date: 2015-11-04
 Author: Hiroaki Yutani
 Maintainer: Hiroaki Yutani <yutani.ini@gmail.com>
 Description: Draw charts using Chartist.js, powered by htmlwidgets.
 Suggests:
-  knitr,
-  testthat
+    knitr,
+    testthat
 Imports:
-  htmlwidgets,
-  dplyr,
-  plyr
+    htmlwidgets,
+    htmltools,
+    dplyr,
+    plyr
 URL: http://github.com/yutannihilation/chartist
 License: WTFPL LICENSE
+RoxygenNote: 5.0.0
