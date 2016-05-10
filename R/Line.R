@@ -123,6 +123,7 @@ Line <- function(x_offset = NULL, x_labelOffset = NULL, x_showLabel = NULL, x_sh
 #' 
 #' A short cut for Line() with showLine = FALSE
 #' 
+#' @param ... arguments passed to Line()
 #' @export
 Point <- function(...) {
   Line(showLine = FALSE, ...)

@@ -16,6 +16,8 @@ chartist(data, x_label_colname, ...)
 
 \item{select_cols}{column name(s) of data}
 
+\item{x_label_colname}{x-axis labels, or the column name which contains x-axis labels}
+
 \item{...}{column name(s) of data. If not specified, use all column except for \code{label_colname}}
 }
 \description{

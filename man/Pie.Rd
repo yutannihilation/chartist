@@ -65,7 +65,8 @@ chartist(data[1:4, ], day) +
   # for smaller screens, draw a normal pie chart
   Pie(donut = FALSE, showLabel = FALSE, responsiveQuery = "screen and (max-width: 600px)")
 
-# By default, Chartist knows only four colours (c.f. https://github.com/gionkunz/chartist-js/issues/79)
+# By default, Chartist knows only four colours
+# (c.f. https://github.com/gionkunz/chartist-js/issues/79)
 # Corrently Pie() cannot work well with data whose length is more than four
 chartist(data, day) + Pie()
 }

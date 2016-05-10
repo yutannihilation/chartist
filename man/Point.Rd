@@ -6,6 +6,9 @@
 \usage{
 Point(...)
 }
+\arguments{
+\item{...}{arguments passed to Line()}
+}
 \description{
 A short cut for Line() with showLine = FALSE
 }

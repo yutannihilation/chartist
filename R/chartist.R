@@ -6,6 +6,7 @@
 #' 
 #' @param data     data.frame containing x-axis label and data series
 #' @param x_labels x-axis labels, or the column name which contains x-axis labels
+#' @param x_label_colname x-axis labels, or the column name which contains x-axis labels
 #' @param select_cols column name(s) of data
 #' @param ...      column name(s) of data. If not specified, use all column except for \code{label_colname}
 #'
