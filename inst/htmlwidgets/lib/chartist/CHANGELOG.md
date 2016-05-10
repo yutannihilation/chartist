@@ -1,3 +1,31 @@
+v0.9.7 - 23 Feb 2016
+--------------------
+- Fixed bug with label and grid rendering on axis, fixes #621
+
+v0.9.6 - 22 Feb 2016
+--------------------
+- Added dual licensing WTFPL and MIT, built new version <Gion Kunz>
+- Adding unminified CSS to dist output, fixes #506 <Gion Kunz>
+- Refactored namespaced attribute handling, fixes #584 <Gion Kunz>
+- Allow charts to be created without data and labels, fixes #598, fixes #588, fixes #537, fixes #425 <Gion Kunz> <Carlos Morales>
+- Removed onlyInteger setting from default bar chart settings, fixes #423 <Gion Kunz>
+- Removed serialization of values on line chart areas, fixes #424 <Gion Kunz>
+- Removed workaround and fallback for SVG element width and height calculations, fixes #592 <Gion Kunz>
+- Render 0 in ct:value attribute for line graphs <Paul Salaets>
+- Allow empty pie chart values to be ignored <Stephen>
+- Fix #527 Pie render issue with small angles. <hansmaad>
+- Small fix for stacked bars with 'holes' in the data <medzes>
+
+
+v0.9.5 - 14 Nov 2015
+--------------------
+- Added 'fillHoles' option for line graphs, which continues the line smoothly through data holes (Thanks to Joshua Warner !)
+- Added option to use relative donut width values (Thanks to hansmaad !)
+- Added stackMode for bar charts to create overlapping charts or bipolar stacked charts (Thanks to Douglas Mak !)
+- Fixed issue with unordered ticks in fixed scale axis, fixes #411 (Thanks Carlos !)
+- Fixed left navigation in examples was not using valid anchors, fixes #514 (Thanks Carlos !)
+- Internal refactoring and cleanup (Thanks to hansmaad !)
+
 v0.9.4 - 06 Aug 2015
 --------------------
 - Added axes to all events where they are available in context to provide better API convenience when developing plugins
